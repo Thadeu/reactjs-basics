@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const SRC_PATH = path.resolve(__dirname, 'src');
 const DIST_PATH = path.resolve(__dirname, 'dist');
 
-let config = {
+var config = {
 	entry: `${SRC_PATH}/app/index.js`,
 	
 	output: { 
