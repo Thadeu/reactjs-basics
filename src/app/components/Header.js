@@ -11,6 +11,10 @@ export const Header = (props) => {
 						<li><Link to={"/notificacoes"} activeStyle={{ color: '#f59' }}>Notificações</Link></li>
 						<li><Link to={"/graficos"} activeStyle={{ color: '#f59' }}>Graficos</Link></li>
 					</ul>
+
+					<ul className="nav navbar-nav navbar-right">
+						<li><Link to={"/login"} activeStyle={{ color: '#f59' }}>Login</Link></li>
+					</ul>
 				</div>
 			</div>
 		</nav>

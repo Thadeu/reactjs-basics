@@ -3,9 +3,8 @@ import axios from 'axios'
 import _ from 'underscore';
 import moment from 'moment';
 
-import {Notificacao} from './Notificacoes/Notificacao';
-import {Agravo} from './Agravos/Agravo';
-import {HeaderPage} from './Notificacoes/HeaderPage';
+import {Notificacao} from './Notificacao';
+import {Agravo} from './Agravo';
 
 import {NotificacoesService} from '../services/Notificacoes';
 
@@ -16,7 +15,20 @@ export class Notificacoes extends React.Component {
 	}
 
 	componentWillMount(){
+		this.getData();
+	}
+
+	componentDidMount(){
+		this.interval = setInterval(() => this.getData(), 5000);
+	}
+
+	componentWillUnMount(){
+		clearInterval(this.interval);
+	}
+
+	getData() {
 		NotificacoesService.dadosPorRegiao().then((response) => {
+			this.setState({territorios: []});
 			this.setState({
 				count: response.data.count,
 				territorios: response.data.territorios
@@ -24,12 +36,13 @@ export class Notificacoes extends React.Component {
 		});
 	}
 
-	render(){
+	renderTerritorios(){
 		const content = _.map(this.state.territorios, (territorio, index) => {
 			return (
 				<div key={index}>
 					<div className="col-md-12">
-						<HeaderPage info={territorio} />
+						<strong>Região: {territorio.regiao}</strong>
+						<p>Total: {territorio.count}</p>
 					</div>
 					
 					<div className="col-md-6">
@@ -45,7 +58,11 @@ export class Notificacoes extends React.Component {
 			)
 		});
 
-		const output = (this.state.count > 0) ? (
+		return content;
+	}
+
+	renderComponent(){
+		return(
 			<section className="app-notificacoes">
 				<div className="col-md-12 text-center">
 					<h1>
@@ -56,15 +73,23 @@ export class Notificacoes extends React.Component {
 				
 				<div className="col-md-12"><hr/></div>
 				
-				<div className="content">{content}</div>
+				<div className="content">
+					{this.renderTerritorios()}
+				</div>
 			</section>
-		) : (
+		);
+	}
+
+	renderLoading(){
+		return(
 			<div className="text-center">
 				<i className="label label-danger">carregando...</i>
 			</div>
-		);
-		
-		return output;
+		)
+	}
+
+	render(){
+		return (this.state.count > 0) ? this.renderComponent() : this.renderLoading();
 	}
 }
 
