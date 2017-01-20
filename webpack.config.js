@@ -9,20 +9,19 @@ var config = {
 	
 	output: { 
 		path: `${DIST_PATH}/app`,
-		filename: 'bundle.js', 
+		filename: 'bundle.min.js', 
 		publicPath: '/app/' 
 	},
 
 	module: {
 		loaders: [
 			{
-				test: /\.(sass|scss)$/,
+				test: /\.(sass|scss|css)$/,
 				loaders: ['style-loader','css-loader?sourceMap','sass-loader?sourceMap']
 			},
 			{
-				test: /\.(js|jsx|es6|react)$/,
+				test: /\.(js|jsx|.json)$/,
 				loader: 'babel-loader',
-				// include: `${SRC_PATH}`,
 				exclude: ['node_modules'],
 				query: {
 					presets: ['es2015', 'react']

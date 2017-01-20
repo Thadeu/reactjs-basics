@@ -41,7 +41,7 @@ export class Notificacoes extends React.Component {
 			return (
 				<div key={index}>
 					<div className="col-md-12">
-						<strong>Região: {territorio.regiao}</strong>
+						<strong>Região: {territorio.nome}</strong>
 						<p>Total: {territorio.count}</p>
 					</div>
 					
